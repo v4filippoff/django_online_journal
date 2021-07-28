@@ -1,0 +1,20 @@
+.navbar {
+    background-color: #e3f2fd;
+}
+
+#main {
+    max-width: 50%;
+}
+
+.empty-content {
+    text-align: center;
+    opacity: 50%;
+}
+
+#create-post-btn {
+    text-align: right;
+}
+
+.btn-light:hover {
+    background-color: #eee;
+}

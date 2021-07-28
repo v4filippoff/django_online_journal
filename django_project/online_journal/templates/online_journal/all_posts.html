@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home page
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Posts</h2>
+        </div>
+        <div id="create-post-btn" class="col">
+            <a href="{% url 'post_create' %}" class="btn btn-light" role="button">Create Post</a>
+        </div>
+    </div>
+    
+    {% include 'online_journal/includes/post_list.html' %}
+{% endblock %}

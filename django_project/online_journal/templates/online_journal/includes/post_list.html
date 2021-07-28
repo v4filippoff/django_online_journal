@@ -1,0 +1,15 @@
+{% for post in post_list %}
+    <div class="card mt-4">
+        <div class="card-header">
+            {{ post.pub_date }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ post.title }}  ({{ post.rating }})</h5>
+            <p class="card-text">{{ post.text|truncatewords:15 }}</p>
+            <a href="{{ post.get_absolute_url }}" class="btn btn-light">Read</a>
+        </div>
+    </div>
+{% empty %}
+    <hr>
+    <h6 class="empty-content">No posts</h6>
+{% endfor %}

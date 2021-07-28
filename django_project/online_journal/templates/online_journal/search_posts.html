@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Posts containing "{{ search_string }}"
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>{{ post_list.count }} results for "{{ search_string }}"</h2>
+        </div>
+    </div>
+    {% include 'online_journal/includes/post_list.html' %}
+{% endblock %}
