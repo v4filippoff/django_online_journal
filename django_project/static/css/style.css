@@ -18,3 +18,22 @@
 .btn-light:hover {
     background-color: #eee;
 }
+
+.order-link {
+    display: inline-block;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.comment-form-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+#comment-textarea {
+    width: 80%;
+}
+
+#comment-submit {
+    align-self: center;
+}

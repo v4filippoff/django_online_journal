@@ -1,4 +1,3 @@
-from django.http.response import HttpResponseRedirect
 from django.views import generic
 from django.http import Http404
 from django.urls import reverse
@@ -17,7 +16,14 @@ class PostListView(generic.ListView):
     context_object_name = 'post_list'
 
     def get_queryset(self):
-        return Post.objects.get_active_posts()
+        ordered_querysets = {
+            'reverse_pub_date': Post.objects.get_posts_reverse_ordered_by_date,
+            'pub_date':         Post.objects.get_posts_ordered_by_date,
+            'rating':           Post.objects.get_posts_ordered_by_rating,
+        }
+        order = self.request.GET.get('order', 'reverse_pub_date')
+
+        return ordered_querysets[order]()
 
 
 class PostDetailView(generic.DetailView):
@@ -76,7 +82,7 @@ class CommentCreateView(generic.CreateView):
     template_name = 'online_journal/post_detail.html'
 
     def form_valid(self, form):
-        form.instance.post = get_object_or_404(Post, pk=self.kwargs['pk'])
+        form.instance.post = Post.objects.get(pk=self.kwargs['pk'])
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
