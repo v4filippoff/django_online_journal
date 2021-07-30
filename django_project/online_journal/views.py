@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.views import generic
 from django.http import Http404
 from django.urls import reverse
@@ -42,6 +43,12 @@ class PostDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        comments = self.get_object().get_comments_ordered_by_date()
+        paginator = Paginator(comments, 5)
+        page_obj = paginator.get_page(self.request.GET.get('page', 1))
+
+        context['page_obj'] = page_obj
         context['form'] = CommentForm()
         return context
 
