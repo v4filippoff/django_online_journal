@@ -44,6 +44,7 @@ class PostDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        #Постраничное отображение комментариев поста
         comments = self.get_object().get_comments_ordered_by_date()
         paginator = Paginator(comments, 5)
         page_obj = paginator.get_page(self.request.GET.get('page', 1))
