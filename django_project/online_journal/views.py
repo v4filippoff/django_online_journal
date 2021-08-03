@@ -61,7 +61,7 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = 'online_journal/post_create.html'
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        form.instance.created_by = self.request.user
         return super().form_valid(form)
     
 
@@ -93,7 +93,7 @@ class CommentCreateView(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.post = Post.objects.get(pk=self.kwargs['pk'])
-        form.instance.user = self.request.user
+        form.instance.created_by = self.request.user
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
