@@ -35,18 +35,17 @@ class PostDetailView(generic.DetailView):
     template_name = 'online_journal/post_detail.html'
 
     def get(self, request, *args, **kwargs):
-        try:
-            self.get_object().update_rating()
-        except AttributeError:
-            raise Http404
+        self.get_object().update_rating()
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        #Постраничное отображение комментариев поста
         comments = self.get_object().get_comments_ordered_by_date()
         paginator = Paginator(comments, 5)
-        page_obj = paginator.get_page(self.request.GET.get('page', 1))
+        page_number = self.request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
 
         context['page_obj'] = page_obj
         context['form'] = CommentForm()

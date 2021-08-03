@@ -1,0 +1,8 @@
+{% for field in form %}
+    <div class="field-wrapper mb-3">
+        {{ field.errors }}
+        <label for="{{ field.id_for_label }}" class='form-label'>{{ field.label }}</label>
+        {{ field }}
+    </div>
+{% endfor %}
+<input class="btn btn-primary" type="submit" value="{{ submit_label }}">
