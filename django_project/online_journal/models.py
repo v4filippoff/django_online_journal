@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 from .managers import PostManager
 
@@ -10,6 +11,7 @@ class Post(models.Model):
     pub_date = models.DateTimeField('Published date', auto_now_add=True)
     is_active = models.BooleanField('Display a post on the site', default=True)
     rating = models.IntegerField('Views count', default=0)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User', related_name='posts')
 
     objects = PostManager()
 
@@ -44,6 +46,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name='Post', related_name='comments')
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User', related_name='comments')
     text = models.TextField('Text')
     pub_date = models.DateTimeField('Published date', auto_now_add=True)
 
