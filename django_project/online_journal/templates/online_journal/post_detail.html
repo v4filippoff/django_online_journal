@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 
 {% block title %}
     {{ post.title }}
@@ -48,7 +49,7 @@
         {% csrf_token %}
         <div class="comment-form-wrapper mt-4">
             <div id="comment-textarea">
-                {{ form.text }}
+                {% render_field form.text class='form-control' rows=3 %}
             </div>
             <div id="comment-submit">
                 <input type="submit" value="Write comment" class="btn btn-primary">

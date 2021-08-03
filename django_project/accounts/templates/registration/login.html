@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="login-form-wrapper">
+            {% include 'includes/default_form_display.html' with submit_label='Login' %}
+        </div>
+    </form>
+{% endblock %}

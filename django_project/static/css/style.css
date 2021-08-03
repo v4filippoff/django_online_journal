@@ -37,3 +37,8 @@
 #comment-submit {
     align-self: center;
 }
+
+.login-form-wrapper {
+    max-width: 50%;
+    margin: auto;
+}

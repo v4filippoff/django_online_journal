@@ -1,8 +1,8 @@
 from django.core.paginator import Paginator
 from django.views import generic
-from django.http import Http404
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
@@ -52,13 +52,17 @@ class PostDetailView(generic.DetailView):
         return context
 
 
-class PostCreateView(generic.CreateView):
+class PostCreateView(LoginRequiredMixin, generic.CreateView):
     """
     Отображает и обрабатывает форму для создания поста
     """
     model = Post
     form_class = PostForm
     template_name = 'online_journal/post_create.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
     
 
 class SearchPostsView(generic.ListView):
@@ -79,7 +83,7 @@ class SearchPostsView(generic.ListView):
         return context
 
 
-class CommentCreateView(generic.CreateView):
+class CommentCreateView(LoginRequiredMixin, generic.CreateView):
     """
     Отображает и обрабатывает форму для создания комментария
     """
@@ -89,6 +93,7 @@ class CommentCreateView(generic.CreateView):
 
     def form_valid(self, form):
         form.instance.post = Post.objects.get(pk=self.kwargs['pk'])
+        form.instance.user = self.request.user
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):

@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'online_journal',
+    'accounts',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +132,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = 'all_posts'
+LOGOUT_REDIRECT_URL = 'all_posts'
+LOGIN_URL = 'login'
