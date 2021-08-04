@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Login
+    Edit profile
 {% endblock %}
 
 {% block content %}
     <form action="" method="post">
         {% csrf_token %}
         <div class="account-form-wrapper">
-            {% include 'includes/default_form_display.html' with submit_label='Login' %}
+            {% include 'includes/default_form_display.html' with submit_label='Save' %}
         </div>
     </form>
 {% endblock %}
