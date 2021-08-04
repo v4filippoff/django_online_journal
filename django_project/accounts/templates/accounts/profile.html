@@ -1,10 +1,46 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     {{ user.username }} | Online Journal
 {% endblock %}
 
 {% block content %}
-    <p>{{ user.username }}</p>
-    <p>{{ user.profile.register_date }}</p>
+    <div class="profile-wrapper">
+        <div class="profile-data profile-block">
+            <div class="profile-avatar">
+                {% if user.profile.avatar %}
+                    <img src="{{ user.profile.avatar.url }}" alt="User Avatar" class='avatar-image'>
+                {% else %}
+                    <img src="{% static 'images/default_avatar.jpg' %}" alt="User Avatar" class='avatar-image'>
+                {% endif %}
+            </div>
+            <div class="profile-info">
+                <p><b>Username:</b> {{ user.username }}</p>
+                <p><b>Registration date:</b> {{ user.profile.register_date }}</p>
+            </div>
+        </div>
+        <div class="profile-bound-content profile-block">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Post</th>
+                    <th scope="col">Publication date</th>
+                    <th scope="col">Link</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for post in user.posts.all %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ post.title }}</td>
+                            <td>{{ post.pub_date }}</td>
+                            <td><a href="{{ post.get_absolute_url }}">View</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

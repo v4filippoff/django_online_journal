@@ -42,3 +42,32 @@
     max-width: 50%;
     margin: auto;
 }
+
+.profile-data {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 50px;
+}
+
+.profile-avatar {
+    width: 33.333%;
+    text-align: center;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.profile-info {
+    padding-left: 15px;
+}
+
+.avatar-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.profile-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
