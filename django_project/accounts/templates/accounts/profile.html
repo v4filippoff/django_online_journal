@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ user.username }} | Online Journal
+{% endblock %}
+
+{% block content %}
+    <p>{{ user.username }}</p>
+    <p>{{ user.profile.register_date }}</p>
+{% endblock %}
