@@ -9,16 +9,18 @@
     <div class="profile-wrapper">
         <div class="profile-data profile-block">
             <div class="profile-avatar">
-                {% if user.profile.avatar %}
-                    <img src="{{ user.profile.avatar.url }}" alt="User Avatar" class='avatar-image'>
+                {% if profile.avatar %}
+                    <img src="{{ profile.avatar.url }}" alt="User Avatar" class='avatar-image'>
                 {% else %}
                     <img src="{% static 'images/default_avatar.jpg' %}" alt="User Avatar" class='avatar-image'>
                 {% endif %}
             </div>
             <div class="profile-info">
-                <p><b>Username:</b> {{ user.username }}</p>
-                <p><b>Registration date:</b> {{ user.profile.register_date }}</p>
-                <a href="{% url 'edit_profile' username=user.username %}" class="btn btn-primary">Edit profile</a>
+                <p><b>Username:</b> {{ profile.user.username }}</p>
+                <p><b>Registration date:</b> {{ profile.registration_date }}</p>
+                {% if profile.slug == user.profile.slug %}
+                    <a href="{% url 'edit_profile' slug=profile.slug %}" class="btn btn-primary">Edit profile</a>
+                {% endif %}
             </div>
         </div>
         <div class="profile-bound-content profile-block">
@@ -32,7 +34,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                    {% for post in user.posts.all %}
+                    {% for post in profile.user.posts.all %}
                         <tr>
                             <th scope="row">{{ forloop.counter }}</th>
                             <td>{{ post.title }}</td>
