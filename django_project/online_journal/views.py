@@ -16,15 +16,15 @@ class PostListView(generic.ListView):
     template_name = 'online_journal/all_posts.html'
     context_object_name = 'post_list'
 
-    def get_queryset(self):
-        ordered_querysets = {
-            'reverse_pub_date': Post.objects.get_posts_reverse_ordered_by_date,
-            'pub_date':         Post.objects.get_posts_ordered_by_date,
-            'rating':           Post.objects.get_posts_ordered_by_rating,
-        }
-        order = self.request.GET.get('order', 'reverse_pub_date')
+    ORDERED_QUERYSETS = {
+        'reverse_pub_date': Post.objects.get_posts_reverse_ordered_by_date,
+        'pub_date':         Post.objects.get_posts_ordered_by_date,
+        'rating':           Post.objects.get_posts_ordered_by_rating,
+    }
 
-        return ordered_querysets[order]()
+    def get_queryset(self):
+        order = self.request.GET.get('order', 'reverse_pub_date')
+        return self.ORDERED_QUERYSETS[order]()
 
 
 class PostDetailView(generic.DetailView):
