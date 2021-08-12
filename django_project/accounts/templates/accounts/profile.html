@@ -16,10 +16,10 @@
                 {% endif %}
             </div>
             <div class="profile-info">
-                <p><b>Username:</b> {{ profile.user.username }}</p>
+                <p><b>Nickname:</b> {{ profile.nickname }}</p>
                 <p><b>Registration date:</b> {{ profile.registration_date }}</p>
-                {% if profile.slug == user.profile.slug %}
-                    <a href="{% url 'edit_profile' slug=profile.slug %}" class="btn btn-primary">Edit profile</a>
+                {% if profile.nickname == user.profile.nickname %}
+                    <a href="{% url 'edit_profile' nickname=profile.nickname %}" class="btn btn-primary">Edit profile</a>
                 {% endif %}
             </div>
         </div>

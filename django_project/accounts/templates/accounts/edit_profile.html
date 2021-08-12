@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="account-form-wrapper">
             {% include 'includes/default_form_display.html' with submit_label='Save' %}

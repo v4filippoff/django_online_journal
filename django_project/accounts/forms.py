@@ -3,9 +3,7 @@ from django.forms import fields
 from .models import Profile
 
 
-class ProfileForm(forms.Form):
-    username = forms.CharField(max_length=100)
-    avatar = forms.ImageField()
-
-    def clean_avatar():
-        pass
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['nickname', 'avatar']

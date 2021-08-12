@@ -4,9 +4,11 @@ from django.http.response import Http404
 from django.urls import reverse_lazy
 from django.urls import reverse
 from django.views import generic
+from django.shortcuts import get_object_or_404
 
 from .forms import ProfileForm
 from .models import Profile
+from .utils import NicknameSlugMixin
 
 
 class SignUpView(generic.CreateView):
@@ -18,26 +20,21 @@ class SignUpView(generic.CreateView):
     template_name = 'registration/signup.html'
 
 
-class UserProfileView(generic.DetailView):
+class UserProfileView(NicknameSlugMixin, generic.DetailView):
     model = Profile
     template_name = 'accounts/profile.html'
 
 
-class ProfileEditView(LoginRequiredMixin, generic.FormView):
+class ProfileEditView(NicknameSlugMixin, LoginRequiredMixin, generic.UpdateView):
+    model = Profile
     form_class = ProfileForm
     template_name = 'accounts/edit_profile.html'
 
     def get(self, request, *args, **kwargs):
-        if kwargs['slug'] != request.user.profile.slug:
+        if kwargs['nickname'] != request.user.profile.nickname:
             raise Http404()
+
         return super().get(request, *args, **kwargs)
 
-    def form_valid(self, form):
-        user = self.request.user
-        user.username = form.cleaned_data['username']
-        user.profile = form.cleaned_data['avatar']
-        user.save()
-        return super().form_valid(form)
-
     def get_success_url(self):
-        return reverse('profile', kwargs={'slug': self.kwargs['slug']})
+        return reverse('profile', kwargs={'nickname': self.object.nickname})
