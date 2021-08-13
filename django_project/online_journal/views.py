@@ -1,6 +1,5 @@
 from django.core.paginator import Paginator
 from django.views import generic
-from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -102,4 +101,4 @@ class CommentCreateView(LoginRequiredMixin, generic.CreateView):
         return context
 
     def get_success_url(self):
-        return reverse('post_detail', kwargs={'pk': self.kwargs['pk']})
+        return self.object.post.get_absolute_url()
