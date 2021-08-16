@@ -136,3 +136,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'all_posts'
 LOGOUT_REDIRECT_URL = 'all_posts'
 LOGIN_URL = 'login'
+
+NICKNAME_REGEX = r'\w+'
