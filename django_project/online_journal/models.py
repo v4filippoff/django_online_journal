@@ -15,6 +15,9 @@ class Post(models.Model):
 
     objects = PostManager()
 
+    class Meta:
+        ordering = ['-is_active', '-pub_date']
+
     def __str__(self):
         """
         Возвращает строковое представление поста

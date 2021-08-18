@@ -17,13 +17,14 @@ class PostManager(models.Manager):
         """
         Возвращает посты, отсортированные по дате (сначала новые)
         """
-        return super().get_queryset().order_by('-pub_date')
+        return super().get_queryset()
 
+    @active_posts
     def get_posts_containing(self, search_string):
         """
         Возвращает посты, заголовки которых содержат строку search_string
         """
-        return self.get_posts_reverse_ordered_by_date().filter(title__contains=search_string)
+        return self.get_queryset().filter(title__contains=search_string)
 
     @active_posts
     def get_posts_ordered_by_rating(self):

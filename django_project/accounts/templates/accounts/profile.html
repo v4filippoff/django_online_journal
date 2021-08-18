@@ -19,31 +19,42 @@
                 <p><b>Nickname:</b> {{ profile.nickname }}</p>
                 <p><b>Registration date:</b> {{ profile.registration_date }}</p>
                 {% if profile.nickname == user.profile.nickname %}
-                    <a href="{% url 'edit_profile' nickname=profile.nickname %}" class="btn btn-primary">Edit profile</a>
+                    <a href="{% url 'edit_profile' nickname=profile.nickname %}" class="btn btn-outline-primary">Edit profile</a>
                 {% endif %}
             </div>
         </div>
         <div class="profile-bound-content profile-block">
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Post</th>
-                    <th scope="col">Publication date</th>
-                    <th scope="col">Link</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    {% for post in profile.user.posts.all %}
-                        <tr>
-                            <th scope="row">{{ forloop.counter }}</th>
-                            <td>{{ post.title }}</td>
-                            <td>{{ post.pub_date }}</td>
-                            <td><a href="{{ post.get_absolute_url }}">View</a></td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Post</th>
+                        <th scope="col">Publication date</th>
+                        <th scope="col">Link</th>
+                        <th scope="col">Is active</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in profile.user.posts.all %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ post.title }}</td>
+                                <td>{{ post.pub_date }}</td>
+                                {% if post.is_active %}
+                                    <td><a href="{{ post.get_absolute_url }}">View</a></td>
+                                    <td><input type="checkbox" name="is_active" value="{{ post.id }}" checked></td>
+                                {% else %}
+                                    <td></td>
+                                    <td><input type="checkbox" name="is_active" value="{{ post.id }}"></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <input class="btn btn-primary" type="submit" value="Save">
+            </form>
         </div>
     </div>
 {% endblock %}

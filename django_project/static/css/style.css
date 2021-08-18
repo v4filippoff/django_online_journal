@@ -71,3 +71,7 @@
     flex-direction: column;
     justify-content: center;
 }
+
+.hidden-post {
+    background-color: rgb(255, 234, 234);
+}
