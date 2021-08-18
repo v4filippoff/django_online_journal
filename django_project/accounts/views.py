@@ -36,6 +36,11 @@ class UserProfileView(NicknameSlugMixin, generic.DetailView):
             post.save()
         return HttpResponseRedirect(reverse('profile', kwargs={'nickname': kwargs['nickname']}))
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_has_permission_to_edit_profile'] = (self.kwargs['nickname'] == self.request.user.profile.nickname)
+        return context
+
 
 class ProfileEditView(NicknameSlugMixin, LoginRequiredMixin, generic.UpdateView):
     """

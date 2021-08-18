@@ -18,7 +18,7 @@
             <div class="profile-info">
                 <p><b>Nickname:</b> {{ profile.nickname }}</p>
                 <p><b>Registration date:</b> {{ profile.registration_date }}</p>
-                {% if profile.nickname == user.profile.nickname %}
+                {% if user_has_permission_to_edit_profile %}
                     <a href="{% url 'edit_profile' nickname=profile.nickname %}" class="btn btn-outline-primary">Edit profile</a>
                 {% endif %}
             </div>
@@ -33,7 +33,9 @@
                         <th scope="col">Post</th>
                         <th scope="col">Publication date</th>
                         <th scope="col">Link</th>
-                        <th scope="col">Is active</th>
+                        {% if user_has_permission_to_edit_profile %}
+                            <th scope="col">Is active</th>
+                        {% endif %}
                     </tr>
                     </thead>
                     <tbody>
@@ -42,12 +44,16 @@
                                 <th scope="row">{{ forloop.counter }}</th>
                                 <td>{{ post.title }}</td>
                                 <td>{{ post.pub_date }}</td>
-                                {% if post.is_active %}
-                                    <td><a href="{{ post.get_absolute_url }}">View</a></td>
-                                    <td><input type="checkbox" name="is_active" value="{{ post.id }}" checked></td>
+                                {% if user_has_permission_to_edit_profile %}
+                                    {% if post.is_active %}
+                                        <td><a href="{{ post.get_absolute_url }}">View</a></td>
+                                        <td><input type="checkbox" name="is_active" value="{{ post.id }}" checked></td>
+                                    {% else %}
+                                        <td></td>
+                                        <td><input type="checkbox" name="is_active" value="{{ post.id }}"></td>
+                                    {% endif %}
                                 {% else %}
-                                    <td></td>
-                                    <td><input type="checkbox" name="is_active" value="{{ post.id }}"></td>
+                                    <td><a href="{{ post.get_absolute_url }}">View</a></td>
                                 {% endif %}
                             </tr>
                         {% endfor %}
