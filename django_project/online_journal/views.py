@@ -102,3 +102,27 @@ class CommentCreateView(LoginRequiredMixin, generic.CreateView):
 
     def get_success_url(self):
         return self.object.post.get_absolute_url()
+
+
+class TopPostsView(generic.ListView):
+    """
+    Отображает список популярных постов (за день, за месяц, за год)
+    """
+    model = Post
+    template_name = 'online_journal/top_posts.html'
+    context_object_name = 'post_list'
+
+    ORDERED_QUERYSETS = {
+        'day':    Post.objects.get_posts_ordered_by_daily_rating,
+        'month':  Post.objects.get_posts_ordered_by_monthly_rating,
+        'year':   Post.objects.get_posts_ordered_by_yearly_rating,
+    }
+
+    def get_queryset(self):
+        order = self.request.GET.get('time_interval', 'day')
+        return self.ORDERED_QUERYSETS[order]()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['time_interval'] = self.request.GET.get('time_interval', 'day')
+        return context

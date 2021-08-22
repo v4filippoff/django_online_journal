@@ -4,7 +4,7 @@
             {{ post.pub_date }}
         </div>
         <div class="card-body">
-            <h5 class="card-title">{{ post.title }}  ({{ post.rating }})</h5>
+            <h5 class="card-title">{{ post.title }}  ({{ post.rating }}) (d:{{ post.daily_rating }}) (m:{{ post.monthly_rating }}) (y:{{ post.yearly_rating }})</h5>
             <p class="card-text">{{ post.text|truncatewords:15 }}</p>
             <a href="{{ post.get_absolute_url }}" class="btn btn-light">Read</a>
         </div>

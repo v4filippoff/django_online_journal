@@ -32,3 +32,24 @@ class PostManager(models.Manager):
         Возвращает посты, отсортированные по количеству просмотров (сначала самые популярные)
         """
         return super().get_queryset().order_by('-rating')
+
+    @active_posts
+    def get_posts_ordered_by_daily_rating(self):
+        """
+        Возвращает посты, отсортированные по количеству просмотров за день (сначала самые популярные)
+        """
+        return super().get_queryset().order_by('-daily_rating')
+
+    @active_posts
+    def get_posts_ordered_by_monthly_rating(self):
+        """
+        Возвращает посты, отсортированные по количеству просмотров за месяц (сначала самые популярные)
+        """
+        return super().get_queryset().order_by('-daily_rating')
+
+    @active_posts
+    def get_posts_ordered_by_yearly_rating(self):
+        """
+        Возвращает посты, отсортированные по количеству просмотров за год (сначала самые популярные)
+        """
+        return super().get_queryset().order_by('-yearly_rating')

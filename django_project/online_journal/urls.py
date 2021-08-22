@@ -9,4 +9,5 @@ urlpatterns = [
     path('post/<int:pk>/add_comment', CommentCreateView.as_view(), name='add_comment'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
     path('post/create/', PostCreateView.as_view(), name='post_create'),
+    path('top/', TopPostsView.as_view(), name='top_posts'),
 ]

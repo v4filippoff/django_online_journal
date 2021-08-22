@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Home page
+    Most popular posts
 {% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col-8">
-            <h2>Posts</h2>
+            <h2>Most popular posts of the {{ time_interval }}</h2>
         </div>
         <div id="create-post-btn" class="col-4">
             <a href="{% url 'post_create' %}" class="btn btn-light" role="button">Create Post</a>
         </div>
     </div>
     <div class="order-links-wrapper">
-        <a href="?order=reverse_pub_date" class="order-link">Сначала новые</a>
-        <a href="?order=rating" class="order-link">Сначала популярные</a>
-        <a href="?order=pub_date" class="order-link">Сначала старые</a>
+        <a href="?time_interval=day" class="order-link">За день</a>
+        <a href="?time_interval=month" class="order-link">За месяц</a>
+        <a href="?time_interval=year" class="order-link">За год</a>
     </div>
     
     {% include 'online_journal/includes/post_list.html' %}

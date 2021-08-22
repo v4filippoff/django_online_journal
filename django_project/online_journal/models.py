@@ -10,13 +10,20 @@ class Post(models.Model):
     text = models.TextField('Text')
     pub_date = models.DateTimeField('Published date', auto_now_add=True)
     is_active = models.BooleanField('Display a post on the site', default=True)
-    rating = models.IntegerField('Views count', default=0)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User', related_name='posts')
+
+    rating = models.IntegerField('Total views count', default=0)
+    daily_rating = models.IntegerField('Daily views count', default=0)
+    monthly_rating = models.IntegerField('Monthly views count', default=0)
+    yearly_rating = models.IntegerField('Yearly views count', default=0)
 
     objects = PostManager()
 
     class Meta:
         ordering = ['-is_active', '-pub_date']
+
+    def save(self, *args, **kwargs):
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         """
@@ -29,9 +36,12 @@ class Post(models.Model):
 
     def update_rating(self):
         """
-        Увеличивает счетчик просмотров поста на 1
+        Увеличивает счетчики просмотров поста на 1
         """
         self.rating += 1
+        self.daily_rating += 1
+        self.monthly_rating += 1
+        self.yearly_rating += 1
         self.save()
 
     def get_comments_count(self):
