@@ -11,6 +11,7 @@ class Post(models.Model):
     pub_date = models.DateTimeField('Published date', auto_now_add=True)
     is_active = models.BooleanField('Display a post on the site', default=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User', related_name='posts')
+    likes = models.IntegerField('Number of likes', default=0)
 
     rating = models.IntegerField('Total views count', default=0)
     daily_rating = models.IntegerField('Daily views count', default=0)

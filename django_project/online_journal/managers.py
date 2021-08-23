@@ -45,7 +45,7 @@ class PostManager(models.Manager):
         """
         Возвращает посты, отсортированные по количеству просмотров за месяц (сначала самые популярные)
         """
-        return super().get_queryset().order_by('-daily_rating')
+        return super().get_queryset().order_by('-monthly_rating')
 
     @active_posts
     def get_posts_ordered_by_yearly_rating(self):
