@@ -11,12 +11,14 @@ class Post(models.Model):
     pub_date = models.DateTimeField('Published date', auto_now_add=True)
     is_active = models.BooleanField('Display a post on the site', default=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User', related_name='posts')
-    likes = models.IntegerField('Number of likes', default=0)
+    likes_number = models.IntegerField('Likes number', default=0)
 
     rating = models.IntegerField('Total views count', default=0)
     daily_rating = models.IntegerField('Daily views count', default=0)
     monthly_rating = models.IntegerField('Monthly views count', default=0)
     yearly_rating = models.IntegerField('Yearly views count', default=0)
+
+    likes = models.ManyToManyField(User, through='PostLikes')
 
     objects = PostManager()
 
@@ -69,5 +71,14 @@ class Comment(models.Model):
         Возвращает строковое представление комментария
         """
         return self.text
+
+
+class PostLikes(models.Model):
+    """
+    Отношение многие-ко-многим. Лайки постов, проставленные пользователем
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name='Post')
+    date = models.DateField('Like date', auto_now_add=True)
 
 
