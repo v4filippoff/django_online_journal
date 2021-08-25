@@ -37,7 +37,7 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'pk': self.id})
 
-    def update_rating(self):
+    def increment_rating(self):
         """
         Увеличивает счетчики просмотров поста на 1
         """
@@ -45,6 +45,30 @@ class Post(models.Model):
         self.daily_rating += 1
         self.monthly_rating += 1
         self.yearly_rating += 1
+        self.save()
+
+    def decrement_rating(self):
+        """
+        Уменьшает счетчики просмотров поста на 1
+        """
+        self.rating -= 1
+        self.daily_rating -= 1
+        self.monthly_rating -= 1
+        self.yearly_rating -= 1
+        self.save()
+
+    def increment_likes_number(self):
+        """
+        Увеличивает счетчик лайков поста на 1
+        """
+        self.likes_number += 1
+        self.save()
+
+    def decrement_likes_number(self):
+        """
+        Уменьшает счетчик лайков поста на 1
+        """
+        self.likes_number -= 1
         self.save()
 
     def get_comments_count(self):
@@ -58,6 +82,12 @@ class Post(models.Model):
         Возвращает комментарии поста, отсортированные по дате (сначала старые)
         """
         return self.comments.order_by('pub_date')
+
+    def already_liked_by_user(self, user):
+        """
+        Проверяет лайкнул ли пользователь пост
+        """
+        return PostLikes.objects.filter(user=user, post=self).exists()
 
 
 class Comment(models.Model):

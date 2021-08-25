@@ -10,8 +10,24 @@
         <h2>{{post.title}}</h2>
         <p class="lead">{{post.text}}</p>
     </div>
-    <div class="comment_label mt-5">
-        <h3>{{ post.get_comments_count }} comments</h3>
+    <div class="row mt-5">
+        <div class="comment_label col-10">
+            <h3>{{ post.get_comments_count }} comments</h3>
+        </div>
+        <div class="col-2">
+            <form action="{% url 'like_post' pk=post.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit"
+                {% if already_liked_by_user %}
+                    value="Liked" 
+                    class="btn btn-danger"
+                {% else %}
+                    value="Like"
+                    class="btn btn-outline-danger"
+                {% endif %}
+                > {{ post.likes_number }}
+            </form>
+        </div>
     </div>
     <hr>
     {% for comment in page_obj %}
