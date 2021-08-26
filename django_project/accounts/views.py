@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http.response import HttpResponseRedirect
-from django.urls import reverse_lazy, reverse
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -34,7 +34,7 @@ class UserProfileView(NicknameSlugMixin, generic.DetailView):
         for post in request.user.posts.all():
             post.is_active = post.id in active_posts_id
             post.save()
-        return HttpResponseRedirect(reverse('profile', kwargs={'nickname': kwargs['nickname']}))
+        return redirect(request.user.profile)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
