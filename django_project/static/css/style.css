@@ -75,3 +75,7 @@
 .hidden-post {
     background-color: rgb(255, 234, 234);
 }
+
+.like-icon:hover {
+    fill: red;
+}
