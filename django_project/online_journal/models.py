@@ -25,9 +25,6 @@ class Post(models.Model):
     class Meta:
         ordering = ['-is_active', '-pub_date']
 
-    def save(self, *args, **kwargs):
-        return super().save(*args, **kwargs)
-
     def __str__(self):
         """
         Возвращает строковое представление поста

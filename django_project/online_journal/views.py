@@ -1,7 +1,8 @@
 from django.core.paginator import Paginator
 from django.views import generic
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 
 from .models import Post, Comment, PostLikes
 from .forms import PostForm, CommentForm
@@ -139,14 +140,17 @@ class ChangeLikeStatusView(LoginRequiredMixin, generic.View):
     def post(self, request, *args, **kwargs):
         user = request.user
         post = get_object_or_404(Post, pk=kwargs['pk'])
+        response = {'liked': None}
 
         like, created = PostLikes.objects.get_or_create(user=user, post=post)
+
         if created:
+            response['liked'] = True
             post.increment_likes_number()
         else:
+            response['liked'] = False
             like.delete()
             post.decrement_likes_number()
 
-        #Уменьшаем счетчики просмотров поста на единицу, чтобы при редиректе на страницу поста не увеличивать их лишний раз на 1
-        post.decrement_rating()
-        return redirect(post)
+        return JsonResponse(response)
+        
