@@ -79,3 +79,12 @@
 .like-icon:hover {
     fill: red;
 }
+
+.mini-avatar {
+    width: 40px; 
+    border-radius: 100px; 
+}
+
+.avatar-link {
+    text-decoration: none;
+}

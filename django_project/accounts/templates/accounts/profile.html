@@ -59,7 +59,9 @@
                         {% endfor %}
                     </tbody>
                 </table>
-                <input class="btn btn-primary" type="submit" value="Save">
+                {% if user_has_permission_to_edit_profile %}
+                    <input class="btn btn-primary" type="submit" value="Save">
+                {% endif %}
             </form>
         </div>
     </div>

@@ -6,7 +6,16 @@
         <div class="card-body">
             <h5 class="card-title">{{ post.title }}  ({{ post.rating }}) (d:{{ post.daily_rating }}) (m:{{ post.monthly_rating }}) (y:{{ post.yearly_rating }})</h5>
             <p class="card-text">{{ post.text|truncatewords:15 }}</p>
-            <a href="{{ post.get_absolute_url }}" class="btn btn-light">Read</a>
+            <div class="row">
+                <div class="col-10">
+                    <a href="{{ post.get_absolute_url }}" class="btn btn-light">Read</a>
+                </div>
+                <div class="col-2">
+                    <a href="{{ post.created_by.profile.get_absolute_url }}" class="avatar-link">
+                        <img src="{{ post.created_by.profile.avatar.url }}" alt="" class="mini-avatar">
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 {% empty %}

@@ -6,6 +6,17 @@
 {% endblock %}
 
 {% block content %}
+    <div class="row">
+        <div class="col-8 mb-2">
+            <a href="{{ post.created_by.profile.get_absolute_url }}" class="avatar-link">
+                <img src="{{ post.created_by.profile.avatar.url }}" alt="" class="mini-avatar">
+            </a>
+            {{ post.created_by.profile.nickname }}
+        </div>
+        <div class="col-4">
+            {{ post.pub_date }}
+        </div>
+    </div>
     <div class="jumbotron">
         <h2>{{post.title}}</h2>
         <p class="lead">{{post.text}}</p>
@@ -35,18 +46,29 @@
         </div>
     </div>
     <hr>
-    {% for comment in page_obj %}
-        <div class="comment_block mt-4">
-            <div class="date mb-2">
-                {{ comment.pub_date }}
+    <div class="comments">
+        {% for comment in page_obj %}
+            <div class="comment_block mt-4">
+                <div class="row">
+                    <div class="col-1">
+                        <a href="{{ comment.created_by.profile.get_absolute_url }}" class="avatar-link">
+                            <img src="{{ comment.created_by.profile.avatar.url }}" alt="" class="mini-avatar">
+                        </a>
+                    </div>
+                    <div class="col-11">
+                        <div class="date mb-2 col-11">
+                            {{ comment.pub_date }}
+                        </div>
+                        <div class="text">
+                            {{ comment.text }}
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="text">
-                {{ comment.text }}
-            </div>
-        </div>
-    {% empty %}
-        <h6 class="empty-content">No comments</h6>
-    {% endfor %}
+        {% empty %}
+            <h6 class="empty-content">No comments</h6>
+        {% endfor %}
+    </div>
 
     <div class="pagination mt-4">
         <span class="step-links">
@@ -66,7 +88,7 @@
         </span>
     </div>
 
-    <form action="{% url 'add_comment' pk=post.id %}" method="post">
+    <form action="{% url 'add_comment' pk=post.id %}" method="post" id="commentForm">
         {% csrf_token %}
         <div class="comment-form-wrapper mt-4">
             <div id="comment-textarea">

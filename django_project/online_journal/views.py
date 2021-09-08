@@ -18,8 +18,8 @@ class PostListView(generic.ListView):
 
     ORDERED_QUERYSETS = {
         'reverse_pub_date': Post.objects.get_posts_reverse_ordered_by_date,
-        'pub_date':         Post.objects.get_posts_ordered_by_date,
-        'rating':           Post.objects.get_posts_ordered_by_rating,
+        'pub_date': Post.objects.get_posts_ordered_by_date,
+        'rating': Post.objects.get_posts_ordered_by_rating,
     }
 
     def get_queryset(self):
@@ -118,9 +118,9 @@ class TopPostsView(generic.ListView):
     context_object_name = 'post_list'
 
     ORDERED_QUERYSETS = {
-        'day':    Post.objects.get_posts_ordered_by_daily_rating,
-        'month':  Post.objects.get_posts_ordered_by_monthly_rating,
-        'year':   Post.objects.get_posts_ordered_by_yearly_rating,
+        'day': Post.objects.get_posts_ordered_by_daily_rating,
+        'month': Post.objects.get_posts_ordered_by_monthly_rating,
+        'year': Post.objects.get_posts_ordered_by_yearly_rating,
     }
 
     def get_queryset(self):
