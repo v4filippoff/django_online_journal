@@ -18,7 +18,7 @@ class Post(models.Model):
     monthly_rating = models.IntegerField('Monthly views count', default=0)
     yearly_rating = models.IntegerField('Yearly views count', default=0)
 
-    likes = models.ManyToManyField(User, through='PostLikes')
+    likes = models.ManyToManyField(User, through='PostLike')
 
     objects = PostManager()
 
@@ -100,7 +100,7 @@ class Comment(models.Model):
         return self.text
 
 
-class PostLikes(models.Model):
+class PostLike(models.Model):
     """
     Отношение многие-ко-многим. Лайки постов, проставленные пользователем
     """

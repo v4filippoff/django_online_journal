@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 
-from .models import Post, Comment, PostLikes
+from .models import Post, Comment, PostLike
 from .forms import PostForm, CommentForm
 
 
@@ -142,7 +142,7 @@ class ChangeLikeStatusView(LoginRequiredMixin, generic.View):
         post = get_object_or_404(Post, pk=kwargs['pk'])
         response = {'liked': None}
 
-        like, created = PostLikes.objects.get_or_create(user=user, post=post)
+        like, created = PostLike.objects.get_or_create(user=user, post=post)
 
         if created:
             response['liked'] = True
