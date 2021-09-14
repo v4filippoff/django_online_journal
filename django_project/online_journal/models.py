@@ -84,7 +84,7 @@ class Post(models.Model):
         """
         Проверяет лайкнул ли пользователь пост
         """
-        return PostLikes.objects.filter(user=user, post=self).exists()
+        return PostLike.objects.filter(user=user, post=self).exists()
 
 
 class Comment(models.Model):
