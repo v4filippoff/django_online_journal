@@ -10,10 +10,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         today = date.today()
-        for post in Post.objects.all():
-            post.daily_rating = 0
-            if today.day == 1:
-                post.monthly_rating = 0
-                if today.month == 1:
-                    post.yearly_rating = 0
-            post.save()
+        Post.objects.update(daily_rating=0)
+        if today.day == 1:
+            Post.objects.update(monthly_rating=0)
+            if today.month == 1:
+                Post.objects.update(yearly_rating=0)
