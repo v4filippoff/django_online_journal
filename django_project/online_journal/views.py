@@ -16,7 +16,7 @@ class PostListView(generic.ListView):
     template_name = 'online_journal/all_posts.html'
     context_object_name = 'post_list'
 
-    ORDERED_QUERYSETS = {
+    ordered_querysets = {
         'reverse_pub_date': Post.objects.get_posts_reverse_ordered_by_date,
         'pub_date': Post.objects.get_posts_ordered_by_date,
         'rating': Post.objects.get_posts_ordered_by_rating,
@@ -24,7 +24,7 @@ class PostListView(generic.ListView):
 
     def get_queryset(self):
         order = self.request.GET.get('order', 'reverse_pub_date')
-        return self.ORDERED_QUERYSETS[order]()
+        return self.ordered_querysets[order]()
 
 
 class PostDetailView(generic.DetailView):
@@ -117,7 +117,7 @@ class TopPostsView(generic.ListView):
     template_name = 'online_journal/top_posts.html'
     context_object_name = 'post_list'
 
-    ORDERED_QUERYSETS = {
+    ordered_querysets = {
         'day': Post.objects.get_posts_ordered_by_daily_rating,
         'month': Post.objects.get_posts_ordered_by_monthly_rating,
         'year': Post.objects.get_posts_ordered_by_yearly_rating,
@@ -125,7 +125,7 @@ class TopPostsView(generic.ListView):
 
     def get_queryset(self):
         order = self.request.GET.get('time_interval', 'day')
-        return self.ORDERED_QUERYSETS[order]()
+        return self.ordered_querysets[order]()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

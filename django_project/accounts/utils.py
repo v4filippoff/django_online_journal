@@ -11,15 +11,15 @@ class NicknameSlugMixin:
     slug_url_kwarg = 'nickname'
 
 
-def check_user_permission_to_edit_profile(method):
+def profile_access_check(view):
     """
     Проверка прав пользователя на изменение состояния профиля
     """
-    @wraps(method)
-    def wrapper(self, request, *args, **kwargs):
+    @wraps(view)
+    def wrapper(request, *args, **kwargs):
         if kwargs['nickname'] != request.user.profile.nickname:
             raise PermissionDenied()
-        return method(self, request, *args, **kwargs)
+        return view(request, *args, **kwargs)
 
     return wrapper
 
