@@ -137,4 +137,4 @@ LOGIN_REDIRECT_URL = 'all_posts'
 LOGOUT_REDIRECT_URL = 'all_posts'
 LOGIN_URL = 'login'
 
-NICKNAME_REGEX = r'\w+'
+AUTH_USER_MODEL = 'accounts.User'

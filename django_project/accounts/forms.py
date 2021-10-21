@@ -1,20 +1,17 @@
-import re
-
 from django import forms
-from django.conf import settings
-from django.core.exceptions import ValidationError
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
 
-from .models import Profile
 
+User = get_user_model()
 
 class ProfileForm(forms.ModelForm):
     class Meta:
-        model = Profile
-        fields = ['nickname', 'avatar']
+        model = User
+        fields = ['username', 'avatar']
 
-    def clean_nickname(self):
-        nickname = self.cleaned_data['nickname']
-        match = re.fullmatch(settings.NICKNAME_REGEX, nickname)
-        if not match:
-            raise ValidationError('Nickname contains invalid characters')
-        return nickname
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password1', 'password2']

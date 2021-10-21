@@ -1,23 +1,20 @@
+from autoslug import AutoSlugField
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.urls import reverse
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='User')
-    nickname = models.CharField('Nickname', max_length=100, unique=True)
+class User(AbstractUser):
+    slug = AutoSlugField(populate_from='username')
     registration_date = models.DateField('Registration date', auto_now_add=True)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True, verbose_name='Avatar')
 
     def get_absolute_url(self):
-        return reverse('profile', kwargs={'nickname': self.nickname})
-
-
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance, nickname=instance.username)
-    instance.profile.save()
-
+        return reverse('profile', kwargs={'slug': self.slug})
+    
+    @property
+    def get_avatar_url(self):
+        if self.avatar and hasattr(self.avatar, 'url'):
+            return self.avatar.url
+        else:
+            return "/media/avatars/default_avatar.jpg"
