@@ -11,8 +11,8 @@
                     <a href="{{ post.get_absolute_url }}" class="btn btn-light">Read</a>
                 </div>
                 <div class="col-2">
-                    <a href="{{ post.created_by.profile.get_absolute_url }}" class="avatar-link">
-                        <img src="{{ post.created_by.profile.avatar.url }}" alt="" class="mini-avatar">
+                    <a href="{{ post.created_by.get_absolute_url }}" class="avatar-link">
+                        <img src="{{ post.created_by.get_avatar_url }}" alt="" class="mini-avatar">
                     </a>
                 </div>
             </div>
