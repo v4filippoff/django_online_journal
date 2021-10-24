@@ -28,9 +28,6 @@ class Post(models.Model):
         ordering = ['-is_active', '-pub_date']
 
     def __str__(self):
-        """
-        Возвращает строковое представление поста
-        """
         return self.title
 
     def get_absolute_url(self):
@@ -96,9 +93,6 @@ class Comment(models.Model):
     pub_date = models.DateTimeField('Published date', auto_now_add=True)
 
     def __str__(self):
-        """
-        Возвращает строковое представление комментария
-        """
         return self.text
 
 
