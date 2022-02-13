@@ -16,8 +16,14 @@ $ python -m venv venv
 $ source venv/bin/activate
 ```
 
+Установите все зависимости
+```sh
+$ pip install -r requirements.txt
+```
+
 Примените миграции к базе данных
 ```sh
+$ cd django_project/
 $ python manage.py migrate
 ```
 
