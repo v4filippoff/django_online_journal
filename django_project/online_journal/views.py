@@ -1,11 +1,15 @@
 from django.core.paginator import Paginator
 from django.views import generic
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 
 from .models import Post, Comment, PostLike
 from .forms import PostForm, CommentForm
+
+
+def home(request):
+    return redirect('all_posts')
 
 
 class PostListView(generic.ListView):
